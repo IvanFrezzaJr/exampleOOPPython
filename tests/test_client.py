@@ -1,4 +1,3 @@
-import os
 import sys
 import pytest
 
@@ -8,12 +7,14 @@ if models not in sys.path:
     sys.path.append(models)
 
 try:
-    from Client import Client, Product
+    from Client import Client
 except ImportError as e:
     print(e)
 
 
 client = Client()
+
+
 def test_class():
     assert isinstance(client, Client)
 
@@ -41,6 +42,3 @@ def test_birthday():
 @pytest.mark.xfail(raises=ValueError)
 def test_birthday_wrong():
     client.birthday = "1988-03-"
-
-
-
