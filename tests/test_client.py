@@ -1,14 +1,15 @@
 import sys
 import pytest
+import os 
 
-models = "../src/Models/"
+models = os.path.dirname(os.path.abspath(__file__)) + "/../src/Models/"
 
 if models not in sys.path:
     sys.path.append(models)
 
 try:
     from Client import Client
-except ImportError as e:
+except ImportErawrror as e:
     print(e)
 
 
