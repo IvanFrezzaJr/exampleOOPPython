@@ -1,41 +1,111 @@
-import os
-import sys
-from abc import ABC, abstractmethod
+from ClientDAOInterface import ClientDAOInterface
+from Client import Client
+from typing import List
 
-models = os.path.dirname(os.path.abspath(__file__)) + "/../Models/"
+from ClientDAOPostgres import ClientDAOPostgres
 
-if models not in sys.path:
-    sys.path.append(models)
 
-try:
-    from Client import Client
-except ImportError as e:
-    print(e)
+class ClientDAO(object):
+    """TODO DEPENDECE INJECTIONS OF CLIENT DAO POSTGRES, ETC
+    
+    Arguments:
+        object {[type]} -- [description]
+    """
 
-'''
-Interface client
-'''
-class ClientDAO(ABC):
-    @abstractmethod
-    def save(self, Client: Client) -> bool:
-        pass
+    __clientDAOs = None
+    _instance = None
 
-    @abstractmethod
-    def delete(self, Client: Client) -> bool:
-        pass
+    '''
+    def __init__(self, clientDAOs: List[ClientDAOInterface]):
+        if isinstance(clientDAOs, list):
+            self.__clientDAOs = clientDAOs
+        else:
+            self.__clientDAOs = [clientDAOs]
+    '''
 
-    @abstractmethod
-    def update(self, Client: Client) -> bool:
-        pass
+    def __new__(self, clientDAOs: List[ClientDAOInterface]):
+        """Singleton
+        """
+        if not self._instance:
+            if isinstance(clientDAOs, list):
+                self.__clientDAOs = clientDAOs
+            else:
+                self.__clientDAOs = [clientDAOs]
 
-    @abstractmethod
+            self._instance = super(ClientDAO, self).__new__(self)
+
+        return self._instance
+
+
+    def save(self, client: Client) -> None:
+        result = []
+        for dao in self.__clientDAOs:
+            try:
+                result.append(dao.save(client))
+                if not all(result):
+                    return False
+
+            except Exception as e:
+                print(e)
+                return False
+
+        return True
+
+
+    def update(self, client: Client) -> None:
+        result = []
+        for dao in self.__clientDAOs:
+            try:
+                result.append(dao.update(client))
+                if not all(result):
+                    return False
+
+            except Exception as e:
+                print(e)
+                return False
+
+        return True
+
+
+    def delete(self, client: Client) -> None:
+        result = []
+        for dao in self.__clientDAOs:
+            try:
+                result.append(dao.delete(client))
+                if not all(result):
+                    return False
+
+            except Exception as e:
+                print(e)
+                return False
+        return True
+
+
     def get(self, id: int) -> Client:
+
+        clients = {}
+
+        for dao in self.__clientDAOs:
+            try:
+                clients[dao.__class__] = []
+                clients[dao.__class__].append(dao.get(id))
+            except Exception as e:
+                print(e)
+                return False
+
+        return clients
+
+
+    def getAll(self):
+        """TODO - IMPLEMENT METHOD NEXT WEAK
+        """
         pass
 
-    @abstractmethod
-    def get(self, column: str, value) -> Client:
-        pass
 
-    @abstractmethod
-    def getAll(self) -> Client[]:
-        pass
+if __name__ == "__main__":
+    clientDAO = ClientDAO(ClientDAOPostgres())
+    client = Client()
+    client.name = "Joao Pinto Rola"
+    client.address = "La pra la de la"
+    client.birthday = "2000-01-01"
+    print(clientDAO.get(131))
