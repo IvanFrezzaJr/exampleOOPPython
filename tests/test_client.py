@@ -1,6 +1,7 @@
 import sys
 import pytest
-import os 
+import os
+import json
 
 models = os.path.dirname(os.path.abspath(__file__)) + "/../src/Models/"
 
@@ -9,13 +10,11 @@ if models not in sys.path:
 
 try:
     from Client import Client
-except ImportErawrror as e:
+except ImportError as e:
     print(e)
 
 
 client = Client()
-
-
 def test_class():
     assert isinstance(client, Client)
 
@@ -43,3 +42,14 @@ def test_birthday():
 @pytest.mark.xfail(raises=ValueError)
 def test_birthday_wrong():
     client.birthday = "1988-03-"
+
+
+def test_repr():
+    client.id = 1
+    client.name = "Ivan"
+    client.address = "7 Pairc na Cullean"
+    client.birthday = "1988-03-25"
+
+    result = repr(client)
+    expected = "Client(id=1, name='Ivan', address='7 Pairc na Cullean', birthday='1988-03-25')"
+    assert result == expected
