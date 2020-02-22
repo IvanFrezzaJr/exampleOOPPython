@@ -34,8 +34,15 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+DROP DATABASE exampleooppython;
+CREATE DATABASE exampleooppython;
+DROP ROLE example;
+CREATE ROLE example; --WITH PASSWORD 'pg123';
+ALTER ROLE example login;
+GRANT ALL PRIVILEGES ON DATABASE exampleooppython TO example; 
+
 --
--- Name: client; Type: TABLE; Schema: public; Owner: postgres
+-- Name: client; Type: TABLE; Schema: public; Owner: example
 --
 
 CREATE TABLE public.client (
@@ -46,14 +53,14 @@ CREATE TABLE public.client (
 );
 
 
-ALTER TABLE public.client OWNER TO postgres;
+ALTER TABLE public.client OWNER TO example;
 
 --
--- Name: client_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: client_id_seq; Type: SEQUENCE; Schema: public; Owner: example
 --
 
 CREATE SEQUENCE public.client_id_seq
-    AS integer
+    
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -61,17 +68,17 @@ CREATE SEQUENCE public.client_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.client_id_seq OWNER TO postgres;
+ALTER TABLE public.client_id_seq OWNER TO example;
 
 --
--- Name: client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: example
 --
 
 ALTER SEQUENCE public.client_id_seq OWNED BY public.client.id;
 
 
 --
--- Name: product; Type: TABLE; Schema: public; Owner: postgres
+-- Name: product; Type: TABLE; Schema: public; Owner: example
 --
 
 CREATE TABLE public.product (
@@ -81,14 +88,14 @@ CREATE TABLE public.product (
 );
 
 
-ALTER TABLE public.product OWNER TO postgres;
+ALTER TABLE public.product OWNER TO example;
 
 --
--- Name: product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: product_id_seq; Type: SEQUENCE; Schema: public; Owner: example
 --
 
 CREATE SEQUENCE public.product_id_seq
-    AS integer
+    
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -96,17 +103,17 @@ CREATE SEQUENCE public.product_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.product_id_seq OWNER TO postgres;
+ALTER TABLE public.product_id_seq OWNER TO example;
 
 --
--- Name: product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: example
 --
 
 ALTER SEQUENCE public.product_id_seq OWNED BY public.product.id;
 
 
 --
--- Name: sale; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sale; Type: TABLE; Schema: public; Owner: example
 --
 
 CREATE TABLE public.sale (
@@ -117,14 +124,14 @@ CREATE TABLE public.sale (
 );
 
 
-ALTER TABLE public.sale OWNER TO postgres;
+ALTER TABLE public.sale OWNER TO example;
 
 --
--- Name: sale_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: sale_id_seq; Type: SEQUENCE; Schema: public; Owner: example
 --
 
 CREATE SEQUENCE public.sale_id_seq
-    AS integer
+    
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -132,17 +139,17 @@ CREATE SEQUENCE public.sale_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sale_id_seq OWNER TO postgres;
+ALTER TABLE public.sale_id_seq OWNER TO example;
 
 --
--- Name: sale_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: sale_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: example
 --
 
 ALTER SEQUENCE public.sale_id_seq OWNED BY public.sale.id;
 
 
 --
--- Name: sale_item; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sale_item; Type: TABLE; Schema: public; Owner: example
 --
 
 CREATE TABLE public.sale_item (
@@ -154,14 +161,14 @@ CREATE TABLE public.sale_item (
 );
 
 
-ALTER TABLE public.sale_item OWNER TO postgres;
+ALTER TABLE public.sale_item OWNER TO example;
 
 --
--- Name: sale_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: sale_item_id_seq; Type: SEQUENCE; Schema: public; Owner: example
 --
 
 CREATE SEQUENCE public.sale_item_id_seq
-    AS integer
+    
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -169,45 +176,45 @@ CREATE SEQUENCE public.sale_item_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sale_item_id_seq OWNER TO postgres;
+ALTER TABLE public.sale_item_id_seq OWNER TO example;
 
 --
--- Name: sale_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: sale_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: example
 --
 
 ALTER SEQUENCE public.sale_item_id_seq OWNED BY public.sale_item.id;
 
 
 --
--- Name: client id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: client id; Type: DEFAULT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.client ALTER COLUMN id SET DEFAULT nextval('public.client_id_seq'::regclass);
 
 
 --
--- Name: product id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: product id; Type: DEFAULT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.product ALTER COLUMN id SET DEFAULT nextval('public.product_id_seq'::regclass);
 
 
 --
--- Name: sale id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: sale id; Type: DEFAULT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale ALTER COLUMN id SET DEFAULT nextval('public.sale_id_seq'::regclass);
 
 
 --
--- Name: sale_item id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: sale_item id; Type: DEFAULT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale_item ALTER COLUMN id SET DEFAULT nextval('public.sale_item_id_seq'::regclass);
 
 
 --
--- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: example
 --
 
 COPY public.client (id, name, address, birthday) FROM stdin;
@@ -215,7 +222,7 @@ COPY public.client (id, name, address, birthday) FROM stdin;
 
 
 --
--- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: example
 --
 
 COPY public.product (id, name, price) FROM stdin;
@@ -223,7 +230,7 @@ COPY public.product (id, name, price) FROM stdin;
 
 
 --
--- Data for Name: sale; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: sale; Type: TABLE DATA; Schema: public; Owner: example
 --
 
 COPY public.sale (id, date, total, id_client) FROM stdin;
@@ -231,7 +238,7 @@ COPY public.sale (id, date, total, id_client) FROM stdin;
 
 
 --
--- Data for Name: sale_item; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: sale_item; Type: TABLE DATA; Schema: public; Owner: example
 --
 
 COPY public.sale_item (id, id_sale, id_product, qty, subtotal) FROM stdin;
@@ -239,35 +246,35 @@ COPY public.sale_item (id, id_sale, id_product, qty, subtotal) FROM stdin;
 
 
 --
--- Name: client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: example
 --
 
 SELECT pg_catalog.setval('public.client_id_seq', 1, false);
 
 
 --
--- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: example
 --
 
 SELECT pg_catalog.setval('public.product_id_seq', 1, false);
 
 
 --
--- Name: sale_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: sale_id_seq; Type: SEQUENCE SET; Schema: public; Owner: example
 --
 
 SELECT pg_catalog.setval('public.sale_id_seq', 1, false);
 
 
 --
--- Name: sale_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: sale_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: example
 --
 
 SELECT pg_catalog.setval('public.sale_item_id_seq', 1, false);
 
 
 --
--- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.client
@@ -275,7 +282,7 @@ ALTER TABLE ONLY public.client
 
 
 --
--- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.product
@@ -283,7 +290,7 @@ ALTER TABLE ONLY public.product
 
 
 --
--- Name: sale_item sale_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sale_item sale_item_pkey; Type: CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale_item
@@ -291,7 +298,7 @@ ALTER TABLE ONLY public.sale_item
 
 
 --
--- Name: sale sale_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sale sale_pkey; Type: CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale
@@ -299,7 +306,7 @@ ALTER TABLE ONLY public.sale
 
 
 --
--- Name: sale sale_id_client_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sale sale_id_client_fkey; Type: FK CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale
@@ -307,7 +314,7 @@ ALTER TABLE ONLY public.sale
 
 
 --
--- Name: sale_item sale_item_id_product_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sale_item sale_item_id_product_fkey; Type: FK CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale_item
@@ -315,7 +322,7 @@ ALTER TABLE ONLY public.sale_item
 
 
 --
--- Name: sale_item sale_item_id_sale_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sale_item sale_item_id_sale_fkey; Type: FK CONSTRAINT; Schema: public; Owner: example
 --
 
 ALTER TABLE ONLY public.sale_item
