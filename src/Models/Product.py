@@ -1,28 +1,69 @@
+from dataclasses import dataclass
+
+'''
+this decorator auto generates __init__ method (constructor), so the attributes'
+class are already required by the constructor
+'''
+@dataclass
 class Product(object):
-    __id = 0
-    __name = ''
-    __price = ''
-    
+    '''
+    Python doesn't have encapsulation, so the following attributes are not private
+    or protected, they're all public, setters and getters are optional
+    '''
+    _id : int
+    _name: str
+    _price: float
+        
+    '''
+    "@property" defines a getter
+    "attribute.setter" defines a setter
+    "attribute.deleter" defines a function to be executed when delete an attribute
+    *IMPORTANT: getters come before the setters!!!
+    '''
     @property
-    def id(self):
-        return self.__id
+    def id_(self):
+        return self._id
     
+    @id_.setter
+    def id_(self, id_):
+        self._id = id_
+        
+    # deleter is automatically executed when called del <obj>.<attr>. E.g: del product.id
+    @id_.deleter
+    def id_(self):
+        self._id = None
+        
     @property
     def name(self):
-        return self.__name
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        self._name = name
+    
+    @name.deleter
+    def name(self):
+        self._name = None
     
     @property
     def price(self):
-        return self.__price
+        return self._price
     
-    @id.setter
-    def id(self, id):
-        self.__id = id
-        
-    @name.setter
-    def name(self, name):
-        self.__name = name
-        
     @price.setter
     def price(self, price):
-        self.__price = price
+        if isinstance(price, float):
+            self._price = price
+        else:
+            raise TypeError('Price has to be float')
+        
+    @price.deleter
+    def price(self):
+        self._price = None
+        
+'''        
+if __name__ == '__main__':
+    product = Product(1, 'beibleide', 9.99)
+    print(str(product))
+    del product.name
+    print(str(product))
+'''

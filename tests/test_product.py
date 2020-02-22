@@ -12,14 +12,14 @@ try:
 except ImportError as e:
     print(e)
 
-product = Product()
+product = Product(1, 'beibleide', 9.99)
 
 def test_class():
     assert isinstance(product, Product)
 
 def test_id():
-    product.id = 5
-    assert product.id == 5
+    product.id_ = 5
+    assert product.id_ == 5
 
 def test_name():
     product.name = 'Jhon'
@@ -28,3 +28,7 @@ def test_name():
 def test_price():
     product.price = 1.99
     assert product.price == 1.99
+    
+def test_wrong_price():
+    with pytest.raises(TypeError):
+        product.price = '9.99'
