@@ -39,6 +39,7 @@ CREATE DATABASE exampleooppython;
 DROP ROLE example;
 CREATE ROLE example; --WITH PASSWORD 'pg123';
 ALTER ROLE example login;
+\connect exampleooppython;
 GRANT ALL PRIVILEGES ON DATABASE exampleooppython TO example; 
 
 --
