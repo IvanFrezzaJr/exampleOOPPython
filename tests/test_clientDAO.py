@@ -73,7 +73,7 @@ def test_get():
     clientDAO.save(client)
 
     # current test
-    result = clientDAO.get(client.id)
+    result = clientDAO.get(client.id_)
 
     expected = {}
     expected[type(ClientDAOPostgres())] = []

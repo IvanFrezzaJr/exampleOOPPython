@@ -30,7 +30,7 @@ class ClientDAOPostgres(DBPostgres, ClientDAOInterface):
             - DBPostgres.save()
             - ClientDAOInterface.save()
     
-    Arguments:
+    Extends:
         DBPostgres {[type]} -- [description]
         ClientDAOInterface {[type]} -- [description]
     
@@ -57,12 +57,12 @@ class ClientDAOPostgres(DBPostgres, ClientDAOInterface):
         sql = f"INSERT INTO client(name, address, birthday) VALUES ('{client.name}', '{client.address}', '{client.birthday}') RETURNING id;"
 
 
-        """CALLS DBPostgres.save() BECOUSE IS THE FIRST INHERITED CLASS
+        """CALLS DBPostgres.save() BECAUSE IS THE FIRST INHERITED CLASS
         """
         if super().execute(sql):
             # first [0] gets record and second [0] gets id.
 
-            client.id = super().get_records()[0][0]
+            client.id_ = super().get_records()[0][0]
 
             return True
         return False
@@ -85,7 +85,7 @@ class ClientDAOPostgres(DBPostgres, ClientDAOInterface):
                 name = '{client.name}',           
                 address = '{client.address}',        
                 birthday = '{client.birthday}'        
-                WHERE id = {client.id};
+                WHERE id = {client.id_};
         """
 
         if super().execute(sql):
@@ -100,7 +100,7 @@ class ClientDAOPostgres(DBPostgres, ClientDAOInterface):
             record = super().get_records()[0]
             if record:
                 client = Client()
-                client.id = record[0]
+                client.id_ = record[0]
                 client.name = record[1]
                 client.address = record[2]
                 client.birthday = str(record[3])
@@ -141,7 +141,7 @@ class ClientDAOPostgres(DBPostgres, ClientDAOInterface):
 
                 if record:
                     client = Client()
-                    client.id = record[0]
+                    client.id_ = record[0]
                     client.name = record[1]
                     client.address = record[2]
                     client.birthday = str(record[3])

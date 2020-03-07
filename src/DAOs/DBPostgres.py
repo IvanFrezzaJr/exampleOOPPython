@@ -43,8 +43,3 @@ class DBPostgres(DBInterface):
 
     def get_records(self):
         return self._records
-
-    def save(self, sql: str) -> int:
-        with self._conn.cursor() as cursor:
-            cursor.execute(sql)
-            return cursor.fetchone()[0]

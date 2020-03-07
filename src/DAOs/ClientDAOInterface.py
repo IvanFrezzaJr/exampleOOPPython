@@ -19,7 +19,7 @@ except ImportError as e:
 class ClientDAOInterface(ABC):
     """Client DAO interface
     
-    Arguments:
+    Implements:
         ABC {Abstract class} 
     
     Raises:

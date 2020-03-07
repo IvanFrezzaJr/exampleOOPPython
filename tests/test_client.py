@@ -20,8 +20,8 @@ def test_class():
 
 
 def test_id():
-    client.id = 4
-    assert client.id == 4
+    client.id_ = 4
+    assert client.id_ == 4
 
 
 def test_name():
@@ -45,11 +45,11 @@ def test_birthday_wrong():
 
 
 def test_repr():
-    client.id = 1
+    client.id_ = 1
     client.name = "Ivan"
     client.address = "7 Pairc na Cullean"
     client.birthday = "1988-03-25"
 
     result = repr(client)
-    expected = "Client(id=1, name='Ivan', address='7 Pairc na Cullean', birthday='1988-03-25')"
+    expected = "Client(id_=1, name='Ivan', address='7 Pairc na Cullean', birthday='1988-03-25')"
     assert result == expected

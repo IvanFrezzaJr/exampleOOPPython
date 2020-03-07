@@ -9,7 +9,7 @@ class Client(object):
 
 
     @property
-    def id(self):
+    def id_(self):
         return self.__id
 
 
@@ -28,8 +28,8 @@ class Client(object):
         return self.__birthday
 
 
-    @id.setter
-    def id(self, id):
+    @id_.setter
+    def id_(self, id):
         self.__id = id
 
 
@@ -49,8 +49,8 @@ class Client(object):
         self.__birthday = birthday
 
     # deleter is automatically executed when called del <obj>.<attr>. E.g: del client.name
-    @id.deleter
-    def id(self):
+    @id_.deleter
+    def id_(self):
         self.__id = None
 
 
@@ -72,13 +72,13 @@ class Client(object):
     def __str__(self):
         """Way to print the object to user
         """
-        return f"(id={self.id}, name='{self.name}', address='{self.address}', birthday='{self.birthday}')"
+        return f"(id_={self.id_}, name='{self.name}', address='{self.address}', birthday='{self.birthday}')"
 
 
     def __repr__(self):
         """Way to print the object to developer
         """
-        return f"{__class__.__name__}(id={self.id}, name='{self.name}', address='{self.address}', birthday='{self.birthday}')"
+        return f"{__class__.__name__}(id_={self.id_}, name='{self.name}', address='{self.address}', birthday='{self.birthday}')"
 
 
     def __eq__(self, other):

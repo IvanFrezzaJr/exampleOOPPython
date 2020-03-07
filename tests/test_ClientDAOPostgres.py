@@ -39,7 +39,7 @@ def test_delete():
     client.address = "test - delete client"
     client.birthday = "2000-01-01"
     clientDAOPostgres.save(client)
-    assert clientDAOPostgres.delete(client.id) == True
+    assert clientDAOPostgres.delete(client.id_) == True
 
 
 def test_get():
@@ -48,7 +48,7 @@ def test_get():
     client.address = "test - get client"
     client.birthday = "2000-01-01"
     clientDAOPostgres.save(client)
-    assert clientDAOPostgres.get(client.id) == client
+    assert clientDAOPostgres.get(client.id_) == client
 
 
 def test_getall():
