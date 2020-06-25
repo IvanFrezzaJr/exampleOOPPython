@@ -59,6 +59,22 @@ class Product(object):
     @price.deleter
     def price(self):
         self._price = None
+
+
+    def __str__(self):
+        """Way to print the object to user
+        """
+        return f"(id={self.id_}, name='{self.name}', price='{self.price}')"
+
+
+    def __repr__(self):
+        """Way to print the object to developer
+        """
+        return f"{__class__.__name__}(id={self.id_}, name='{self.name}', price='{self.price}')"
+
+
+    def __eq__(self, other):
+        return self.__repr__() == other.__repr__()
         
 '''        
 if __name__ == '__main__':
